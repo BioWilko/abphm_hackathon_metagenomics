@@ -2,31 +2,31 @@ process fetch_refs {
     conda "$projectDir/environment.yml"
 
     input:
-        tuple val(taxon_name), val(ref_accession), val(proportion)
+        val(row)
 
     output:
-        tuple val(taxon_name), val(ref_accession), val(proportion), path("${taxon_name}.fasta")
+        tuple val(row), path("${taxon_name}.fasta")
 
     script:
         """
-        ref_fetch.py --accession ${ref_accession} --email ${params.email} > ${taxon_name}.fasta
+        ref_fetch.py --accession ${row.ref_accession} --email ${params.email} > ${row.taxon_name}.fasta
         """
 }
 
 process gen_reads {
     conda "$projectDir/environment.yml"
     input:
-        tuple val(taxon_name), val(ref_accession), val(proportion), path(ref_fasta)
+        tuple val(row), path(ref_fasta)
     
     output:
-        tuple val(taxon_name), val(ref_accession), val(proportion), path(ref_fasta), emit: tax_metadata
-        path("${taxon_name}_reads.fastq"), emit: tax_fastq
+        tuple val(row), path(ref_fasta), emit: tax_metadata
+        path("${row.taxon_name}_reads.fastq"), emit: tax_fastq
 
     script:
-        n_reads = proportion * params.total_reads
+        n_reads = row.proportion * params.total_reads
 
         """
-        badread simulate --reference ${ref_fasta} --quantity ${n_reads} > ${taxon_name}_reads.fastq
+        badread simulate --reference ${ref_fasta} --quantity ${n_reads} > ${row.taxon_name}_reads.fastq
         """
 
 }
@@ -36,8 +36,9 @@ workflow {
     Channel
         .fromPath("${params.meta_manifest}")
         .splitCsv(header: true, sep: "\t")
+        .set {manifest_ch}
     
-    fetch_refs(row.taxon_name, row.ref_accession, row.proportion) | gen_reads
+    fetch_refs(manifest_ch) | gen_reads
 
     gen_reads.out.tax_fastq
         .collectFile(name: "simulated_metagenome.fastq", newLine: true, storeDir: "${params.out_dir}")
