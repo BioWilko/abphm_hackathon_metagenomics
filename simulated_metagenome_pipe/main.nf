@@ -36,9 +36,8 @@ workflow {
     Channel
         .fromPath("${params.meta_manifest}")
         .splitCsv(header: true, sep: "\t")
-        .set {manifest_ch}
     
-    fetch_refs(manifest_ch.taxon_name, manifest_ch.ref_accession, manifest_ch.proportion) | gen_reads
+    fetch_refs(row.taxon_name, row.ref_accession, row.proportion) | gen_reads
 
     gen_reads.out.tax_fastq
         .collectFile(name: "simulated_metagenome.fastq", newLine: true, storeDir: "${params.out_dir}")
