@@ -1,4 +1,6 @@
 process fetch_refs {
+    conda "$projectDir/environment.yml"
+
     input:
         tuple val(taxon_name), val(ref_accession), val(proportion)
 
@@ -12,6 +14,7 @@ process fetch_refs {
 }
 
 process gen_reads {
+    conda "$projectDir/environment.yml"
     input:
         tuple val(taxon_name), val(ref_accession), val(proportion), path(ref_fasta)
     
