@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+
 from Bio import Entrez
 import sys
+
 
 def fetch_fasta(accession, email):
     """Retrieve FASTA record from NCBI RefSeq database."""
@@ -16,6 +19,7 @@ def fetch_fasta(accession, email):
 
     return handle
 
+
 def main():
     import argparse
 
@@ -27,6 +31,7 @@ def main():
     fasta_handle = fetch_fasta(args.accession, args.email)
 
     print(fasta_handle, file=sys.stdout)
+
 
 if __name__ == "__main__":
     main()
