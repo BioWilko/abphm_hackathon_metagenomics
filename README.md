@@ -1,6 +1,6 @@
 Introduction:
 
-Nextflow is a workflow management system that allows you to create, run, and manage complex data-driven workflows. It is particularly useful for handling large-scale, computationally intensive tasks such as those encountered in genomics and bioinformatics. The code you provided defines a Nextflow workflow for simulating metagenomic data based on reference genomes.
+The code in this repository defines a Nextflow workflow for simulating metagenomic data based on reference genomes.
 
 # Simulated Metagenome Workflow
 
