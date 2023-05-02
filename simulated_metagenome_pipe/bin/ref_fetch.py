@@ -30,7 +30,9 @@ def main():
 
     fasta_handle = fetch_fasta(args.accession, args.email)
 
-    print(fasta_handle, file=sys.stdout)
+    sys.stdout.write("\n".join(x.rstrip() for x in fasta_handle.readlines()))
+
+    fasta_handle.close()
 
 
 if __name__ == "__main__":

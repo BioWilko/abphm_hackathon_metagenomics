@@ -5,11 +5,11 @@ process fetch_refs {
         val(row)
 
     output:
-        tuple val(row), path("${taxon_name}.fasta")
+        tuple val(row), path("${row.taxon_name}.fasta")
 
     script:
         """
-        ref_fetch.py --accession ${row.ref_accession} --email ${params.email} > ${row.taxon_name}.fasta
+        ref_fetch.py --accession ${row.ref_accession} --email ${params.email} > "${row.taxon_name}.fasta"
         """
 }
 
@@ -26,7 +26,7 @@ process gen_reads {
         n_reads = row.proportion * params.total_reads
 
         """
-        badread simulate --reference ${ref_fasta} --quantity ${n_reads} > ${row.taxon_name}_reads.fastq
+        badread simulate --reference "${ref_fasta}" --quantity ${n_reads} > "${row.taxon_name}_reads.fastq"
         """
 
 }
