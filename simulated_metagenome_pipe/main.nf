@@ -5,7 +5,7 @@ process fetch_refs {
         val(row)
 
     output:
-        tuple val(row), path("${row.ref_accession}_ref.fasta"), val(stdout)
+        tuple val(row), path("${row.ref_accession}_ref.fasta"), stdout
 
     script:
         """
