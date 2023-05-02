@@ -24,7 +24,7 @@ process gen_reads {
 
     script:
 
-        int n_reads = Math.round(row.proportion * params.total_reads)
+        int n_reads = Math.round(row.proportion * (float) params.total_reads)
 
         """
         badread simulate --reference "${ref_fasta}" --quantity ${n_reads} > "${row.taxon_name}_reads.fastq"
