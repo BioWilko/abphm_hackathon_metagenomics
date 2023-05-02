@@ -16,9 +16,16 @@ def fetch_fasta(accession, email):
     gi = record["IdList"][0]
 
     # Use the efetch utility to retrieve the sequence record in FASTA format
-    handle = Entrez.efetch(db="nucleotide", id=gi, rettype="fasta", retmode="text")
+    fasta_handle = Entrez.efetch(
+        db="nucleotide", id=gi, rettype="fasta", retmode="text"
+    )
 
-    return handle
+    summary_handle = Entrez.esummary(db="nucleotide", id=gi)
+    summary = Entrez.read(summary_handle)
+
+    tax_id = int(summary[0]["TaxId"])
+
+    return fasta_handle, tax_id
 
 
 def main():
@@ -31,9 +38,9 @@ def main():
     parser.add_argument("--proportion", type=float, required=True)
     args = parser.parse_args()
 
-    fasta_handle = fetch_fasta(args.accession, args.email)
+    fasta_handle, tax_id = fetch_fasta(args.accession, args.email)
 
-    with open(f"{args.accession}_ref.fasta", "wt") as out_fh:
+    with open(f"{tax_id}.fasta", "wt") as out_fh:
         out_fh.write("\n".join(x.rstrip() for x in fasta_handle.readlines()))
 
     fasta_handle.close()

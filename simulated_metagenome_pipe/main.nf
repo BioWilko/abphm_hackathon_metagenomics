@@ -1,11 +1,15 @@
 process fetch_refs {
     conda "$projectDir/environment.yml"
 
+    publishDir "${params.out_dir}/references/", mode: 'copy'
+
+    maxForks 2
+
     input:
         val(row)
 
     output:
-        tuple val(row), path("${row.ref_accession}_ref.fasta"), stdout
+        tuple val(row), path("*.fasta"), stdout
 
     script:
         """
@@ -20,12 +24,12 @@ process gen_reads {
     
     output:
         tuple val(row), path(ref_fasta), emit: tax_metadata
-        path("${row.taxon_name}_reads.fastq"), emit: tax_fastq
+        path("reads.fastq"), emit: tax_fastq
 
     script:
 
         """
-        badread simulate --reference "${ref_fasta}" --quantity ${n_reads} > "${row.taxon_name}_reads.fastq"
+        badread simulate --reference "${ref_fasta}" --quantity ${n_reads} > "reads.fastq"
         """
 
 }
