@@ -15,7 +15,7 @@ def fetch_fasta(accession, email):
     gi = record["IdList"][0]
 
     # Use the efetch utility to retrieve the sequence record in FASTA format
-    handle = Entrez.efetch(db="nucleotide", id=gi, rettype="fasta", retmode="text")
+    handle = Entrez.efetch(db="refseq", id=gi, rettype="fasta", retmode="text")
 
     return handle
 
