@@ -23,7 +23,8 @@ process gen_reads {
         path("${row.taxon_name}_reads.fastq"), emit: tax_fastq
 
     script:
-        n_reads = row.proportion * params.total_reads
+
+        n_reads = Float.parseFloat(row.proportion) * params.total_reads
 
         """
         badread simulate --reference "${ref_fasta}" --quantity ${n_reads} > "${row.taxon_name}_reads.fastq"
