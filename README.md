@@ -1,7 +1,3 @@
-Introduction:
-
-The code in this repository defines a Nextflow workflow for simulating metagenomic data based on reference genomes.
-
 # Simulated Metagenome Workflow
 
 This repository contains a Nextflow workflow for simulating metagenomic data based on reference genomes. The workflow consists of two processes, `fetch_refs` and `gen_reads`, which fetch reference genomes using their accession numbers and generate simulated reads from the reference genomes, respectively.
