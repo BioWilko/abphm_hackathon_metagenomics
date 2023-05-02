@@ -5,26 +5,24 @@ process fetch_refs {
         val(row)
 
     output:
-        tuple val(row), path("${row.taxon_name}.fasta")
+        tuple val(row), path("${row.ref_accession}.fasta"), val(stdout)
 
     script:
         """
-        ref_fetch.py --accession ${row.ref_accession} --email ${params.email} > "${row.taxon_name}.fasta"
+        ref_fetch.py --accession ${row.ref_accession} --email ${params.email}
         """
 }
 
 process gen_reads {
     conda "$projectDir/environment.yml"
     input:
-        tuple val(row), path(ref_fasta)
+        tuple val(row), path(ref_fasta), val(n_reads)
     
     output:
         tuple val(row), path(ref_fasta), emit: tax_metadata
         path("${row.taxon_name}_reads.fastq"), emit: tax_fastq
 
     script:
-
-        int n_reads = Math.round(row.proportion * (float) params.total_reads)
 
         """
         badread simulate --reference "${ref_fasta}" --quantity ${n_reads} > "${row.taxon_name}_reads.fastq"

@@ -2,6 +2,7 @@
 
 from Bio import Entrez
 import sys
+import math
 
 
 def fetch_fasta(accession, email):
@@ -26,13 +27,20 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--accession", type=str, required=True)
     parser.add_argument("--email", type=str, required=True)
+    parser.add_argument("--total_reads", type=int, required=True)
+    parser.add_argument("--proportion", type=float, required=True)
     args = parser.parse_args()
 
     fasta_handle = fetch_fasta(args.accession, args.email)
 
-    sys.stdout.write("\n".join(x.rstrip() for x in fasta_handle.readlines()))
+    with open(f"{args.accession}_ref.fasta", "wt") as out_fh:
+        out_fh.write("\n".join(x.rstrip() for x in fasta_handle.readlines()))
 
     fasta_handle.close()
+
+    n_reads = math.floor(args.total_reads * args.proportion)
+
+    sys.stout.write(n_reads)
 
 
 if __name__ == "__main__":
