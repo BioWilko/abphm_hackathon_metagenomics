@@ -23,3 +23,8 @@ cd simulated_metagenome_pipe
 **gen_reads process**: This process generates simulated reads from the reference genomes using the `badread` package. The input is a tuple containing the row from the metadata manifest file, the reference genome FASTA file, and the number of reads to generate. The output includes a tuple containing the row, the reference genome FASTA file, and taxonomic metadata, as well as a FASTQ file with the simulated reads for each taxon.
 
 **workflow**: This part of the code connects the `fetch_refs` and `gen_reads` processes using the `manifest_ch` channel. The output FASTQ files from the `gen_reads` process are collected into a single file called "simulated_metagenome.fastq" and stored in the specified output directory.
+
+2. Run the Nextflow Pipeline. The following is an example
+```bash
+nextflow run /file/path/to/simulated-metagenome-workflow/main.nf --meta_manifest /file/path/to/manifest/file --out_dir /file/path/to/out_dir 
+```
