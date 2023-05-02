@@ -13,7 +13,7 @@ This repository contains a Nextflow workflow for simulating metagenomic data bas
 
 ```bash
 git clone https://github.com/yourusername/simulated-metagenome-workflow.git
-cd simulated-metagenome-workflowa```
+cd simulated-metagenome-workflowa´´´
 
 ## Code Explanation
 
