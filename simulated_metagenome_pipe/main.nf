@@ -9,7 +9,7 @@ process fetch_refs {
 
     script:
         """
-        ref_fetch.py --accession ${row.ref_accession} --email ${params.email}
+        ref_fetch.py --accession ${row.ref_accession} --email ${params.email} --total_reads ${params.total_reads} --proportion ${row.proportion}
         """
 }
 
