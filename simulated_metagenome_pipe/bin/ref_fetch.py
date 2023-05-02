@@ -40,7 +40,7 @@ def main():
 
     n_reads = math.floor(args.total_reads * args.proportion)
 
-    sys.stdout.write(n_reads)
+    sys.stdout.write(str(n_reads))
 
 
 if __name__ == "__main__":
