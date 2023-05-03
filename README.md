@@ -2,6 +2,8 @@
 
 This repository contains a Nextflow workflow for simulating metagenomic data based on reference genomes. The workflow consists of two processes, `fetch_refs` and `gen_reads`, which fetch reference genomes using their accession numbers and generate simulated reads from the reference genomes, respectively.
 
+This work has been developed by a group of participants at the 9th Microbes and Food Safety Bioinformatics Hackathon held in Cambridge, UK in May 2023.
+
 ## Requirements
 
 - [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation)
