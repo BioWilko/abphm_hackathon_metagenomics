@@ -14,7 +14,7 @@ This work has been developed by a group of participants at the 9th Microbes and 
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/simulated-metagenome-workflow.git
+git clone https://github.com/BioWilko/simulated-metagenome-workflow.git
 cd simulated_metagenome_pipe
 ```
 
@@ -30,3 +30,4 @@ cd simulated_metagenome_pipe
 ```bash
 nextflow run /file/path/to/simulated-metagenome-workflow/main.nf --meta_manifest /file/path/to/manifest/file --out_dir /file/path/to/out_dir 
 ```
+Optional arguments include `--email`, `--error_model`, `--read_len`, and `total_reads`
